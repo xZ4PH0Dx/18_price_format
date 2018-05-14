@@ -18,6 +18,9 @@ class FormatPriceTestCase(unittest.TestCase):
         self.assertEqual('-4', format_price(-4.0))
         self.assertEqual('-5.50', format_price(-5.5000))
 
+    def test_big_decimals(self):
+        self.assertEqual('3 245', format_price(3245.0000001))
+
     def test_zero_num_price(self):
         self.assertEqual('0.50', format_price(.5))
         self.assertEqual('0.10', format_price(.099))
