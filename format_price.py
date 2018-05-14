@@ -3,17 +3,22 @@ import argparse
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('number', help='input number', type=float)
+    parser.add_argument('number', help='input number')
     return parser.parse_args()
 
 
 def format_price(price=None):
-    if not isinstance(price, float):
+    if isinstance(price, bool):
         return None
-    if price == int(price):
-        return '{:,.2f}'.format(price).replace('.00', '').replace(',', ' ')
-    else:
-        return '{:,.2f}'.format(price).replace(',', ' ')
+    try:
+        if float(price):
+            price = float(price)
+            if price.is_integer():
+                return '{:,.0f}'.format(price).replace(',', ' ')
+            else:
+                return '{:,.2f}'.format(price).replace(',', ' ')
+    except (TypeError, ValueError):
+        return None
 
 
 if __name__ == '__main__':
